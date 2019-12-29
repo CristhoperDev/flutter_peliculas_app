@@ -36,16 +36,7 @@ class HomePage extends StatelessWidget {
     return FutureBuilder(
       future: filmsProvider.getOnCinemas(),
       builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-        if (snapshot.hasData) {
-          return CardSwiper(films: snapshot.data);
-        } else {
-          return Container(
-            height: 400.0,
-            child: Center(
-              child: CircularProgressIndicator()
-            )
-          );
-        }
+        return snapshot.hasData ? CardSwiper(films: snapshot.data) : Container( height: 400.0, child: Center( child: CircularProgressIndicator() ));
       }
     );
   }
@@ -64,11 +55,7 @@ class HomePage extends StatelessWidget {
           FutureBuilder(
             future: filmsProvider.getPopulars(),
             builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-              if (snapshot.hasData) {
-                return FilmHorizontal(films: snapshot.data);
-              } else {
-                return CircularProgressIndicator();
-              }
+              return snapshot.hasData ? FilmHorizontal(films: snapshot.data) : CircularProgressIndicator();
             }
           ),
         ],

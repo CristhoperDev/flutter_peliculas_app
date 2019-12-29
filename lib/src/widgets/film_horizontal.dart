@@ -11,7 +11,7 @@ class FilmHorizontal extends StatelessWidget {
     final _screenSize = MediaQuery.of(context).size;
 
     return Container(
-      height: _screenSize.height * 0.27,
+      height: _screenSize.height * 0.28,
       child: PageView(
         controller: PageController(
           initialPage: 1,
