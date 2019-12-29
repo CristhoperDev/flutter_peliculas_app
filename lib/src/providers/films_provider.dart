@@ -42,10 +42,11 @@ class FilmsProvider {
 
   Future< List<Film> > getPopulars() async {
     _popularPage++;
+
     final url = Uri.https(_url, '3/movie/popular', {
       'api_key'   : _apiKey,
       'language'  : _language,
-      'pages'     : '$_popularPage',
+      'page'     : _popularPage.toString(),
     });
 
     final resp = await _processResponse(url);
