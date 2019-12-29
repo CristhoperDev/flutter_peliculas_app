@@ -21,8 +21,10 @@ class HomePage extends StatelessWidget {
       ),
       body: Container(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            _swiperCards()
+            _swiperCards(),
+            _footer(context)
           ],
         ),
       ),
@@ -45,10 +47,23 @@ class HomePage extends StatelessWidget {
         }
       }
     );
-
-    /*filmsProvider.getOnCinemas();
-    return CardSwiper(
-      films: [1,2,3,4,5],
-    );*/
+  }
+  
+  Widget _footer(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      child: Column(
+        children: <Widget>[
+          Text('Populares', style: Theme.of(context).textTheme.subhead),
+          FutureBuilder(
+            future: filmsProvider.getPopulars(),
+            builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+              snapshot.data?.forEach((p) => print(p.title));
+              return Container();
+            }
+          ),
+        ],
+      ),
+    );
   }
 }
