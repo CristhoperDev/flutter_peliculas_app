@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Films {
   List<Film> items = new List();
 
@@ -60,5 +62,9 @@ class Film {
     voteAverage       = json["vote_average"].toDouble();
     overview          = json["overview"];
     releaseDate       = DateTime.parse(json["release_date"]);
+  }
+
+  getPosterImage() {
+    return posterPath == null ? AssetImage('assets/no-image.jpg') : 'https://image.tmdb.org/t/p/w500/$posterPath';
   }
 }
