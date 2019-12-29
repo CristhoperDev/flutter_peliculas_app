@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas_futter_app/src/model/actor_model.dart';
 import 'package:peliculas_futter_app/src/model/film_model.dart';
+import 'package:peliculas_futter_app/src/providers/films_provider.dart';
 
 class FilmDetail extends StatelessWidget {
   @override
@@ -19,6 +21,7 @@ class FilmDetail extends StatelessWidget {
               _description(film),
               _description(film),
               _description(film),
+              _createCast(film),
             ]),
           ),
         ],
@@ -89,6 +92,54 @@ class FilmDetail extends StatelessWidget {
       child: Text(
         film.overview,
         textAlign: TextAlign.justify,
+      ),
+    );
+  }
+
+  Widget _createCast(Film film) {
+    final filmProvider = new FilmsProvider();
+
+    return FutureBuilder(
+      future: filmProvider.getCast(film.id),
+      builder: (context, AsyncSnapshot<List> snapshot) {
+        return snapshot.hasData ? _createActorsPageView(snapshot.data) : Center( child: CircularProgressIndicator() );
+      }
+    );
+  }
+
+  Widget _createActorsPageView(List<Actor> actors) {
+    return SizedBox(
+      height: 200.0,
+      child: PageView.builder(
+        pageSnapping: false,
+        controller: PageController(
+          viewportFraction: 0.3,
+          initialPage: 1
+        ),
+        itemCount: actors.length,
+        itemBuilder: (context, i) => _actorCard(actors[i])
+      ),
+    );
+  }
+
+  Widget _actorCard( Actor actor ) {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: FadeInImage(
+              image: NetworkImage(actor.getPhoto()),
+              placeholder: AssetImage('assets/no-image.jpg'),
+              height: 150.0,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Text(
+            actor.name,
+            overflow: TextOverflow.ellipsis,
+          )
+        ],
       ),
     );
   }
