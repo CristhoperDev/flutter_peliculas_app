@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas_futter_app/src/model/film_model.dart';
+import 'package:peliculas_futter_app/src/providers/films_provider.dart';
 
 class DataSearch extends SearchDelegate {
   String selection = '';
+  final filmsProvider = new FilmsProvider();
 
   final films = [
     'Spiderman',
@@ -61,6 +64,44 @@ class DataSearch extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    if (query.isEmpty) {
+      return Container();
+    }
+
+    return FutureBuilder(
+      future: filmsProvider.searchFilm(query),
+      builder: (BuildContext context, AsyncSnapshot<List<Film>> snapshot) {
+        if (snapshot.hasData) {
+          final films = snapshot.data;
+
+          return ListView(
+            children: films.map((film) {
+              return ListTile(
+                leading: FadeInImage(
+                  image: NetworkImage(film.getPosterImage()),
+                  placeholder: AssetImage('assets/no-image.jpg'),
+                  width: 50.0,
+                  fit: BoxFit.contain,
+                ),
+                title: Text(film.title),
+                subtitle: Text(film.originalTitle),
+                onTap: () {
+                  close(context, null);
+                  film.uniqueId = '';
+                  Navigator.pushNamed(context, '/detalle', arguments: film);
+                },
+              );
+            }).toList(),
+          );
+        } else {
+          return Center( child: CircularProgressIndicator(), );
+        }
+      },
+    );
+  }
+
+  /*@override
+  Widget buildSuggestions(BuildContext context) {
     // it is suggestion when people wrote
     final suggestedList = (query.isEmpty) ? recentFilms : films.where((p) => p.toLowerCase().startsWith(query.toLowerCase())).toList();
 
@@ -77,6 +118,6 @@ class DataSearch extends SearchDelegate {
         );
       },
     );
-  }
+  }*/
 
 }

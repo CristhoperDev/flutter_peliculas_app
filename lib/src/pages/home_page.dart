@@ -27,8 +27,10 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: Wrap(
+          direction: Axis.horizontal,
+          spacing: 15.0, // Espacio entre elementos
+          runSpacing: 25.0,
           children: <Widget>[
             _swiperCards(),
             _footer(context)

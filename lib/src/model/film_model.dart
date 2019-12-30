@@ -66,10 +66,10 @@ class Film {
   }
 
   getPosterImage() {
-    return posterPath == null ? AssetImage('assets/no-image.jpg') : 'https://image.tmdb.org/t/p/w500/$posterPath';
+    return posterPath == null ? 'https://www.fing.edu.uy/inco/grupos/gsi/img/placeholder.png' : 'https://image.tmdb.org/t/p/w500/$posterPath';
   }
 
   getBackgroundImage() {
-    return posterPath == null ? AssetImage('assets/no-image.jpg') : 'https://image.tmdb.org/t/p/w500/$backdropPath';
+    return posterPath == null ? 'https://www.fing.edu.uy/inco/grupos/gsi/img/placeholder.png' : 'https://image.tmdb.org/t/p/w500/$backdropPath';
   }
 }
