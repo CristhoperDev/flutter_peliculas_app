@@ -4,25 +4,38 @@ class DataSearch extends SearchDelegate {
   @override
   List<Widget> buildActions(BuildContext context) {
     //Appbar actions
-    return null;
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () => query = '',
+      )
+    ];
   }
 
   @override
   Widget buildLeading(BuildContext context) {
     //start Appbar Icon
-    return null;
+    return IconButton(
+      icon: AnimatedIcon(
+        icon: AnimatedIcons.menu_arrow,
+        progress: transitionAnimation,
+      ),
+      onPressed: () {
+        close(context, null);
+      },
+    );
   }
 
   @override
   Widget buildResults(BuildContext context) {
     // create results that you show
-    return null;
+    return Container();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     // it is suggestion when people wrote
-    return null;
+    return Container();
   }
 
 }
